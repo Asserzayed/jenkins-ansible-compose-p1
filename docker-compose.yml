@@ -18,7 +18,7 @@ services:
 #        ports:
 #            - "6033:3306"
         volumes:
-            - ${HOME}/mysql_db/data:/var/lib/mysql
+            - ./mysql_db/data:/var/lib/mysql
         networks:
             - mysql-phpmyadmin
 
