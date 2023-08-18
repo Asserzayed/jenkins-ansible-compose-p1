@@ -10,7 +10,7 @@ pipeline {
                     sh '''
                     cd /home/devops/deployment && docker-compose down && cd .. && rm -rf * && rm -rf .*
                     scp -r . devops@192.168.70.43:/home/devops/deployment/
-                    cd /home/devops/deployment && docker-compose up -d
+                    cd /home/devops/deployment/ && docker-compose up -d
                     '''
                 }
             }
