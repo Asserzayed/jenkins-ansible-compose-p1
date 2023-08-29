@@ -3,4 +3,4 @@
   get_url:
     url: https://github.com/docker/compose/releases/download/v2.20.3/docker-compose-darwin-x86_64
     dest: /usr/local/bin/docker-compose
-  become: yes
+    mode: 'u+x,g+x'
