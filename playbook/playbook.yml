@@ -1,15 +1,72 @@
-- name: Deploy Files
-  hosts: deployment1
+---
+- name: Install/Check Docker-CE
+  hosts: deployment_servers
+  become: yes
+  vars:
+    - user_name: s1
   tasks:
-    - name: Delete contents of a directory
-      ansible.builtin.file:
-        path: /home/s1/deployment
-        state: absent
-        recurse: yes
-      become: yes
-    - name: Copy files
-      ansible.builtin.copy:
-        src: .
-        dest: /home/s1/deployment/
-      become: yes
-  
+  - name: "Installing Docker Prerequisite packages"
+    yum:
+      name: ['yum-utils', 'device-mapper-persistent-data', 'lvm2']
+      state: latest
+  - name: "Configuring docker-ce repo"
+    get_url:
+      url: https://download.docker.com/linux/centos/docker-ce.repo
+      dest: /etc/yum.repos.d/docker-ce.repo
+    become: yes
+  - name: " Installing Docker latest version"
+    yum:
+      name: docker-ce
+      state: present
+  - name: " Starting and Enabling Docker service"
+    service:
+      name: docker
+      state: started
+      enabled: yes
+    become: yes
+  - name: Add user name to docker group
+    user:
+      name: "{{ user_name }}"
+      groups: docker
+      append: yes
+    become: yes
+
+- name: Install/Check Docker-Compose
+  hosts: deployment_servers
+  become: yes
+  tasks:
+  - name: "Downloading docker-compose binaries"
+    get_url:
+      url: https://github.com/docker/compose/releases/download/v2.20.3/docker-compose-darwin-x86_64
+      dest: /usr/local/bin/docker-compose
+    become: yes
+
+- name: Update apt cache and install Nginx
+  yum:
+    name: nginx
+    state: latest
+    update_cache: yes
+
+- name: Apply Nginx template
+  vars:
+    FQDN: proxy.silicon-mind.com
+    server_name: 192.168.70.43
+  template:
+    src: templates/nginx.conf.j2
+    dest: /etc/nginx/conf.d/default.conf
+  notify: Restart Nginx
+
+- name: Allow all access to tcp port 80
+  ufw:
+    rule: allow
+    port: '80'
+    proto: tcp
+  ufw:
+    rule: allow
+    port: '443'
+    proto: tcp
+
+- name: Restart Nginx
+  service:
+    name: nginx
+    state: restarted  
