@@ -1,0 +1,5 @@
+---
+- name: Create certificate directory
+  file:
+    path: ~/deployment
+    state: directory

@@ -9,3 +9,4 @@
     - install_nginx
     - config_nginx
     - config_firewall
+    - ready_deploy
