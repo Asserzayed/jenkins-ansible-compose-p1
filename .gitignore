@@ -1,2 +1,2 @@
-playbook/group_vars/deployment_servers/vault
+playbook/group_vars/deployment_servers/*
 mysql_db
