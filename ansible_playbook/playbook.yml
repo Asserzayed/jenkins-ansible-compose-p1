@@ -9,4 +9,5 @@
     - install_nginx
     - config_nginx
     - config_firewall
+    - adjust_selinux
     - ready_deploy

@@ -1,0 +1,4 @@
+---
+- name: Set httpd_can_network_connect SELinux boolean to on to allow HTTP access for nginx to targets
+  become: yes
+  command: setsebool httpd_can_network_connect on

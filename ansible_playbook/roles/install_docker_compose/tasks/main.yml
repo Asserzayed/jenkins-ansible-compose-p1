@@ -1,8 +1,20 @@
 ---
-- name: "Downloading docker-compose binaries"
+- name: Check docker-compose
+  become_user: "{{ user_name }}"
+  command: docker-compose -v
+  register: command_output
+  ignore_errors: yes
+  
+- name: Tell me what ansible reads
+  debug:
+    msg: "Ansible ran the command and the first substring is {{ command_output['stdout_lines'] }}"
+  ignore_errors: yes
+  
+- name: Downloading docker-compose binaries
   get_url:
     url: "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-linux-x86_64"
     dest: /usr/local/bin/docker-compose
     mode: 0755
     force: yes
   become: true
+  when: command_output['failed']
