@@ -1,6 +1,6 @@
 [deployment_servers]
 192.168.70.43
 [deployment_servers:vars]
-ansible_user= devops
+ansible_user= {{ user_name }}
 ansible_ssh_pass= {{ vault_devops_pass }}
 ansible_become_password= {{ vault_devops_pass }}
