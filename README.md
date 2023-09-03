@@ -10,7 +10,7 @@ So, in this example I'll use Ansible to provision and Jenkins to run docker-comp
 
 ## Instructions
 
-- Machines are assumed to be Debian.
+- Machines are assumed to be Fedora (CentOS).
   
 - Difference between `docker-compose.yml` and `docker-compose2.yml` is that the first pulls every app as an image and configures everything for just one remote host, the latter pulls only MySQL and PMA while nginx is installed natively on the remote host and meant to be used with Ansible.
 
