@@ -23,7 +23,7 @@ or distribute it using Ansible (if multiple deployment servers are used) providi
 
 - Invoke Ansible using `ansible-playbook -i inventory playbook.yml --ask-vault-pass` on your ansible machine and give out the vault password manually or add it to the jenkins pipeline `Jenkinsfile` and give out the vault password as a file using `ansible-playbook -i inventory --vault-password-file ../vault playbook.yml`.
 
-
+- Create a new pipeline job adjust it to use Jenkinsfile as pipeline file and create git webhook to trigger through Jenkins UI.
 
 ## Work Diagram
 ![ansible-compose-jenkins-p1](https://github.com/Asserzayed/jenkins-ansible-compose-p1/assets/17936594/a89d84e6-59fb-4c87-bc42-31c79e81ca22)
